@@ -68,7 +68,14 @@ python src/analyze.py outputs/*run_folder*
 ### Metrics
 
 - Coverage: percentage of provenance attributes mentioned
+  Check how many provenance attributes from a checklist are mentioned in the model's description.
+
 - Hallucination: percentage of claims not supported by source text
-- Consistency: Pairwise cosine similarity between chunk summaries
+  What fraction of the model's claims are NOT supported by the source?
+  Right now it's just a lexical check: a claim is 'supported' if enough of its content words appear in the source text.
+
+- Consistency: Pairwise cosine similarity between chunk summaries (High consistency if the model produces coherent descriptions across chunks)
+
 - ROUGE-L F1: ROUGE-L Score against a reference
-- Tokens to coverage: How many tokens before quality threshold is reached
+
+- Tokens to coverage: How many tokens before quality threshold is reached?
