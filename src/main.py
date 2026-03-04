@@ -159,12 +159,12 @@ class OllamaBenchmark:
 
 if __name__ == "__main__":
     FILES = [
-        # "jsons/nasa_F.jsonl",
+        "jsons/nasa_F.jsonl",
         # "jsons/nasa_Y.json",
-        "jsons/train_test_splits_F.jsonl",
-        "jsons/train_test_splits_Y.json",
-        "jsons/turbolence_F.jsonl",
-        "jsons/turbolence_Y.json",
+        # "jsons/train_test_splits_F.jsonl",
+        # "jsons/train_test_splits_Y.json",
+        # "jsons/turbolence_F.jsonl",
+        # "jsons/turbolence_Y.json",
     ]
 
     tester = OllamaBenchmark(MODELS_TO_TEST)
