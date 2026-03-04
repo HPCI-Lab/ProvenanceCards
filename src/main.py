@@ -19,13 +19,15 @@ MODELS_TO_TEST = [
     # {"name": "Mistral-7B-v0.3",  "model": "mistral:7b"},
 ]
 
-def ollama_chat(model: str, messages: list, temperature: float = 0.1, num_predict: int = 200) -> dict:
+def ollama_chat(model: str, messages: list, temperature: float = 0.1, num_predict: int = None) -> dict:
     payload = {
         "model":   model,
         "messages": messages,
         "stream":  False,
-        "options": {"temperature": temperature, "num_predict": num_predict},
+        "options": {"temperature": temperature},
     }
+    if num_predict: 
+        payload["num_predict"] = num_predict
     resp = requests.post(OLLAMA_URL, json=payload)
     resp.raise_for_status()
     return resp.json()
@@ -157,8 +159,12 @@ class OllamaBenchmark:
 
 if __name__ == "__main__":
     FILES = [
-        "jsons/example_F.jsonl",
-        "cards/example_F.md",
+        # "jsons/nasa_F.jsonl",
+        # "jsons/nasa_Y.json",
+        "jsons/train_test_splits_F.jsonl",
+        "jsons/train_test_splits_Y.json",
+        "jsons/turbolence_F.jsonl",
+        "jsons/turbolence_Y.json",
     ]
 
     tester = OllamaBenchmark(MODELS_TO_TEST)
