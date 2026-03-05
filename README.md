@@ -79,3 +79,11 @@ python src/analyze.py outputs/*run_folder*
 - ROUGE-L F1: ROUGE-L Score against a reference
 
 - Tokens to coverage: How many tokens before quality threshold is reached?
+
+
+### TODO
+
+- add provenance to inference
+- viz dashboard with correct "lower is better / higher is better"
+- more analysis?
+- better reference for text gold standard 

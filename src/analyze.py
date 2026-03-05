@@ -21,8 +21,6 @@ from metrics import (
     calculate_bleu_multi_ref,
     calculate_bleu,
 )
-
-
 from extraction import *
 
 
@@ -61,6 +59,10 @@ def analyze_single(data: dict,reference: str | None,ground_truth_attrs: dict | N
     # metrics["calculate_log_likelihood"] = calculate_log_likelihood(data["final_description"])
     metrics["bleu_multi_ref"] = calculate_bleu_multi_ref(reference, data["final_description"])
     metrics["bleu"] = calculate_bleu(reference, data["final_description"])
+
+    metrics["total_letters"] = len(data["final_description"])
+    metrics["total_words"] = len(data["final_description"].split(" "))
+    metrics["total_sentences"] = len(data["final_description"].split(". "))
 
     return metrics
 
@@ -132,17 +134,18 @@ def build_summary_df(all_metrics: dict[str, dict[str, dict]]) -> pd.DataFrame:
             ae  = metrics.get("attribute_extraction", {})
             row["attr_accuracy"] = ae.get("accuracy")
 
-            d  = metrics.get("distinct_n", 0.0)
-            row["distinct_n"] = d
-            v  = metrics.get("self_bleu", 0.0)
-            row["self_bleu"] = v
-            v  = metrics.get("bleu_multi_ref", 0.0)
-            row["bleu_multi_ref"] = v
-            v  = metrics.get("bleu", 0.0)
-            row["bleu"] = v
+            row["distinct_n"] = metrics.get("distinct_n", 0.0)
+            row["self_bleu"] = metrics.get("self_bleu", 0.0)
+            row["bleu_multi_ref"] =metrics.get("bleu_multi_ref", 0.0)
+            row["bleu"] = metrics.get("bleu", 0.0)
 
             # metrics["calculate_perplexity"] = calculate_perplexity(data["final_description"])
             # metrics["calculate_log_likelihood"] = calculate_log_likelihood(data["final_description"])
+
+            row["total_letters"] = metrics.get("total_letters", 0.0)
+            row["total_words"] = metrics.get("total_words", 0.0)
+            row["total_sentences"] = metrics.get("total_sentences", 0.0)
+
 
             rows.append(row)
 
