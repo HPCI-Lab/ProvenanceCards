@@ -1,7 +1,7 @@
 import json
 
 from consts import *
-from utils import *
+from utils import _load_jsonl, _load_md, _parse_md_sections, _kv_lines_to_dict, _flatten_dict
 
 def detect_schema(source_path: str) -> str:
     """
@@ -300,7 +300,7 @@ def compute_reference_from_source(file: str) -> str:
     schema, filetype = detect_schema(source_path)
     print(schema, filetype, source_path)
 
-    if schema == "flowcept" and filetype == "jsonl":
+    if schema == "flowcept" and filetype == "json":
         records = _load_jsonl(source_path)
         attrs   = _extract_flowcept(records)
         return _flowcept_to_reference(attrs, source_path)

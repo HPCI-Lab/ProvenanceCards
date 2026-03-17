@@ -12,7 +12,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # ── Config ──────────────────────────────────────────────────────────────────
-CSV_PATH = "results.csv"
+CSV_PATH = "results/analysis_results.csv"
 OUT_PATH = "dashboard_per_collector.pdf"
 
 PALETTE = {
@@ -179,33 +179,53 @@ with PdfPages(OUT_PATH) as pdf:
     fig.text(0.5, 0.975, "Provenance Cards Benchmark — Results Dashboard", ha="center", va="top", fontsize=18, fontweight="bold", color="#1a1a2e")
     fig.text(0.5, 0.953, "Model: Llama-3.2-3B  •  Datasets: Example, Fusion, NASA, Train/Test Splits, Turbulence", ha="center", va="top", fontsize=10, color="#555")
 
-    gs = gridspec.GridSpec(3, 3, figure=fig,
+    gs = gridspec.GridSpec(4, 4, figure=fig,
                            top=0.9, bottom=0.04,
                            left=0.06, right=0.97,
                            hspace=0.52, wspace=0.38)
 
     # ── Row 0: Schema comparison (yprov vs flowcept) ─────────────────────────
     ax00 = fig.add_subplot(gs[0, 0])
-    grouped_bar(ax00, schema_groups, "coverage_score", PALETTE, "Coverage Score\n(yprov vs flowcept)", "Score", ylim=(0, 1))
+    grouped_bar(ax00, schema_groups, "absolute_factual_coverage_score", PALETTE, "Coverage Score\n(yprov vs flowcept)", "Score", ylim=(0, 1))
 
-    ax01 = fig.add_subplot(gs[0, 1])
+    ax00 = fig.add_subplot(gs[0, 1])
+    grouped_bar(ax00, schema_groups, "relative_factual_coverage_score", PALETTE, "Coverage Score\n(yprov vs flowcept)", "Score", ylim=(0, 1))
+
+    ax00 = fig.add_subplot(gs[0, 2])
+    grouped_bar(ax00, schema_groups, "relative_factual_coverage_f1", PALETTE, "Coverage Score\n(yprov vs flowcept)", "Score", ylim=(0, 1))
+
+    ax01 = fig.add_subplot(gs[0, 3])
+    grouped_bar(ax01, schema_groups, "tokens_for_coverage", PALETTE, "Hallucination Rate\n(yprov vs flowcept)", "Rate", ylim=(0, 1))
+
+    ax01 = fig.add_subplot(gs[1, 0])
     grouped_bar(ax01, schema_groups, "hallucination_rate", PALETTE, "Hallucination Rate\n(yprov vs flowcept)", "Rate", ylim=(0, 1))
 
-    ax02 = fig.add_subplot(gs[0, 2])
+    ax02 = fig.add_subplot(gs[1, 1])
     grouped_bar(ax02, schema_groups, "rouge_l_f1", PALETTE, "ROUGE-L F1\n(yprov vs flowcept)", "F1", ylim=(0, 0.15))
 
-    # ── Row 2: Per-dataset breakdowns ─────────────────────────────────────────
-    ax20 = fig.add_subplot(gs[1, 0])
-    per_dataset_bars(ax20, "coverage_score", "Coverage Score per Dataset", "Score")
+    ax02 = fig.add_subplot(gs[1, 2])
+    grouped_bar(ax02, schema_groups, "distinct_n", PALETTE, "ROUGE-L F1\n(yprov vs flowcept)", "F1", ylim=(0, 0.15))
 
-    ax21 = fig.add_subplot(gs[1, 1])
+    ax02 = fig.add_subplot(gs[1, 3])
+    grouped_bar(ax02, schema_groups, "self_bleu", PALETTE, "ROUGE-L F1\n(yprov vs flowcept)", "F1", ylim=(0, 0.15))
+
+
+    # ── Row 2: Per-dataset breakdowns ─────────────────────────────────────────
+    ax20 = fig.add_subplot(gs[2, 0])
+    per_dataset_bars(ax20, "relative_factual_coverage_score", "Coverage Score per Dataset", "Score")
+
+    ax21 = fig.add_subplot(gs[2, 1])
     per_dataset_bars(ax21, "hallucination_rate", "Hallucination Rate per Dataset", "Rate")
 
-    ax22 = fig.add_subplot(gs[1, 2])
+    ax22 = fig.add_subplot(gs[2, 2])
     per_dataset_bars(ax22, "rouge_l_f1", "ROUGE-L F1 per Dataset", "F1")
 
+    ax02 = fig.add_subplot(gs[2, 3])
+    grouped_bar(ax02, schema_groups, "bleu_multi_ref", PALETTE, "ROUGE-L F1\n(yprov vs flowcept)", "F1", ylim=(0, 0.15))
+    
+
     # ── Row 3: Radar + Heatmap ────────────────────────────────────────────────
-    ax30 = fig.add_subplot(gs[2, 0], polar=True)
+    ax30 = fig.add_subplot(gs[3, 0], polar=True)
     radar_cats = ["Coverage", "ROUGE-L F1", "Semantic Sim", "1-Hallucination", "BLEU"]
     radar_data = {}
     cols = []
@@ -214,14 +234,14 @@ with PdfPages(OUT_PATH) as pdf:
         sub = df[df["group"] == grp]
         cols.append(GROUP_COLORS[grp])
         radar_data[grp] = {
-            "Coverage":       sub["coverage_score"].mean(),
+            "Coverage":       sub["relative_factual_coverage_score"].mean(),
             "ROUGE-L F1":     sub["rouge_l_f1"].mean(),
             "Semantic Sim":   sub["semantic_mean_sim"].mean(),
             "1-Hallucination": 1 - sub["hallucination_rate"].mean(),
             "BLEU":           sub["bleu"].mean() * 100,   # rescale so it's visible
         }
     radar_chart(ax30, radar_cats, radar_data, cols, "Multi-Metric Radar\n(all groups, normalised 0–1)")
-    ax30 = fig.add_subplot(gs[2, 1], polar=True)
+    ax30 = fig.add_subplot(gs[3, 1], polar=True)
     radar_cats = ["Coverage", "ROUGE-L F1", "Semantic Sim", "1-Hallucination", "BLEU"]
     radar_data = {}
     cols = []
@@ -230,7 +250,7 @@ with PdfPages(OUT_PATH) as pdf:
         sub = df[df["group"] == grp]
         cols.append(GROUP_COLORS[grp])
         radar_data[grp] = {
-            "Coverage":       sub["coverage_score"].mean(),
+            "Coverage":       sub["relative_factual_coverage_score"].mean(),
             "ROUGE-L F1":     sub["rouge_l_f1"].mean(),
             "Semantic Sim":   sub["semantic_mean_sim"].mean(),
             "1-Hallucination": 1 - sub["hallucination_rate"].mean(),
@@ -238,15 +258,20 @@ with PdfPages(OUT_PATH) as pdf:
         }
     radar_chart(ax30, radar_cats, radar_data, cols, "Multi-Metric Radar\n(all groups, normalised 0–1)")
 
-    ax31 = fig.add_subplot(gs[2, 2])
-    heatmap(ax31, "coverage_score", "Coverage Score Heatmap\n(group × dataset)")
+    ax31 = fig.add_subplot(gs[3, 2])
+    heatmap(ax31, "relative_factual_coverage_score", "Coverage Score Heatmap\n(group × dataset)")
 
     pdf.savefig(fig, bbox_inches="tight", facecolor=fig.get_facecolor())
     plt.close(fig)
 
+    ax02 = fig.add_subplot(gs[3, 3])
+    grouped_bar(ax02, schema_groups, "total_words", PALETTE, "ROUGE-L F1\n(yprov vs flowcept)", "F1", ylim=(0, 0.15))
+
+    # ax02 = fig.add_subplot(gs[3, 4])
+    # grouped_bar(ax02, schema_groups, "total_sentences", PALETTE, "ROUGE-L F1\n(yprov vs flowcept)", "F1", ylim=(0, 0.15))
 
     metrics_p2 = [
-        ("coverage_score", "Coverage Score" ), # (0, 1)),
+        ("relative_factual_coverage_score", "Coverage Score" ), # (0, 1)),
         ("hallucination_rate","Hallucination Rate"), #  (0, 1)),
         ("rouge_l_f1", "ROUGE-L F1"), # (0, 0.18)),
         ("semantic_mean_sim", "Semantic Consistency"), #  (0.3, 0.9)),

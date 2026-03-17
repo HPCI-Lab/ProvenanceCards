@@ -14,18 +14,15 @@ from consts import *
 # 1. FACTUAL COVERAGE SCORE
 # ---------------------------------------------------------------------------
 
-def factual_coverage_score(description: str, checklist: list[str] = None) -> dict:
-    """
-    Check how many provenance attributes from a checklist are mentioned
-    in the model's description.
-    """
-    checklist = checklist or DEFAULT_PROVENANCE_CHECKLIST
+def factual_coverage_score(description: str, checklist = None) -> dict:
+    """ Check how many provenance attributes from a checklist are mentioned in the model's description. """
+    checklist = checklist if checklist else DEFAULT_PROVENANCE_CHECKLIST
     desc_lower = description.lower()
     found   = [attr for attr in checklist if attr in desc_lower]
     missing = [attr for attr in checklist if attr not in desc_lower]
     return {
-        "score":   round(len(found) / len(checklist), 4),
-        "found":   found,
+        "score": len(found) / len(checklist),
+        "found": found,
         "missing": missing,
     }
 
@@ -34,17 +31,8 @@ def factual_coverage_score(description: str, checklist: list[str] = None) -> dic
 # 2. HALLUCINATION RATE
 # ---------------------------------------------------------------------------
 
-def extract_claims(text: str) -> list[str]:
-    """Split text into individual sentences as a rough claim unit."""
-    sentences = re.split(r"(?<=[.!?])\s+", text.strip())
-    return [s.strip() for s in sentences if len(s.strip()) > 10]
-
 # TODO: This has to be made better
-def is_claim_supported(claim: str, source_text: str, threshold: float = 0.5) -> bool:
-    """
-    Lightweight lexical check: a claim is 'supported' if enough of its content words appear in the source text.
-    To improve, maybe try replace with an NLI model?
-    """
+def is_claim_supported(claim: str, source_text: str, threshold: float = 0.3) -> bool:
     stopwords = {"the", "a", "an", "is", "are", "was", "were", "in", "of",
                  "to", "and", "or", "it", "this", "that", "with", "for",
                  "on", "at", "by", "from", "as", "be", "has", "have", "its"}
@@ -58,16 +46,17 @@ def is_claim_supported(claim: str, source_text: str, threshold: float = 0.5) -> 
     return (len(overlap) / len(claim_words)) >= threshold
 
 
-def hallucination_rate(description: str, source_text: str, threshold: float = 0.5) -> dict:
-    """
-    Estimate what fraction of the model's claims are NOT supported by the source.
-    """
-    claims      = extract_claims(description)
+def hallucination_rate(description: str, source_text: str, threshold: float = 0.3) -> dict:
+    """Estimate what fraction of the model's claims are NOT supported by the source."""
+    
+    sentences = description.split(". ") #= re.split(r"(?<=[.])\s+", text.strip())
+    claims = [s.strip() for s in sentences if len(s.strip()) > 10]
+
     unsupported = [c for c in claims if not is_claim_supported(c, source_text, threshold)]
     return {
-        "rate":               round(len(unsupported) / len(claims), 4) if claims else 0.0,
+        "rate": len(unsupported) / len(claims) if claims else 0.0,
         "unsupported_claims": unsupported,
-        "total_claims":       len(claims),
+        "total_claims": len(claims),
     }
 
 
@@ -153,50 +142,6 @@ def rouge_l(hypothesis: str, reference: str) -> dict:
 
 
 # ---------------------------------------------------------------------------
-# 5. TOKENS TO ADEQUATE COVERAGE
-# ---------------------------------------------------------------------------
-
-def tokens_to_coverage(
-    per_chunk_summaries: list[str],
-    per_chunk_token_counts: list[int],
-    checklist: list[str] = None,
-    coverage_threshold: float = 0.7,
-) -> dict:
-    """
-    Find how many tokens were consumed before the cumulative description
-    crossed a coverage threshold.
-
-    Args:
-        per_chunk_summaries:     Ordered list of summaries (one per chunk).
-        per_chunk_token_counts:  Tokens used for each chunk.
-        checklist:               Attribute checklist for coverage scoring.
-        coverage_threshold:      Score at which coverage is 'adequate'.
-
-    Returns:
-        dict with 'tokens_at_threshold', 'chunk_at_threshold', 'coverage_curve'.
-    """
-    cumulative_text   = ""
-    cumulative_tokens = 0
-    curve             = []
-    threshold_hit     = None
-
-    for i, (summary, tokens) in enumerate(zip(per_chunk_summaries, per_chunk_token_counts)):
-        cumulative_text   += " " + summary
-        cumulative_tokens += tokens
-        coverage = factual_coverage_score(cumulative_text, checklist)["score"]
-        curve.append({"chunk": i, "tokens": cumulative_tokens, "coverage": coverage})
-
-        if threshold_hit is None and coverage >= coverage_threshold:
-            threshold_hit = {"chunk": i, "tokens": cumulative_tokens, "coverage": coverage}
-
-    return {
-        "tokens_at_threshold": threshold_hit["tokens"] if threshold_hit else None,
-        "chunk_at_threshold":  threshold_hit["chunk"]  if threshold_hit else None,
-        "coverage_curve":      curve,
-    }
-
-
-# ---------------------------------------------------------------------------
 # 6. CHUNK COUNT SENSITIVITY
 # ---------------------------------------------------------------------------
 
@@ -217,95 +162,6 @@ def chunk_count_sensitivity(descriptions_by_chunk_count: dict[int, str],referenc
         slope = None
 
     return {"scores": scores, "degradation_slope": round(slope, 6) if slope is not None else None}
-
-
-# ---------------------------------------------------------------------------
-# 7. ATTRIBUTE EXTRACTION ACCURACY
-# ---------------------------------------------------------------------------
-
-def attribute_extraction_accuracy(
-    extracted: dict[str, Any],
-    ground_truth: dict[str, Any],
-) -> dict:
-    """
-    Compare model-extracted provenance attributes against known ground truth.
-
-    Args:
-        extracted:    Dict of attributes the model extracted, e.g.
-                      {"author": "Alice", "version": "1.0", "license": "MIT"}
-        ground_truth: Dict of the correct attribute values.
-
-    Returns:
-        dict with 'accuracy', 'correct', 'incorrect', 'missing' fields.
-    """
-    correct   = []
-    incorrect = []
-    missing   = []
-
-    for key, true_val in ground_truth.items():
-        if key not in extracted:
-            missing.append(key)
-        elif str(extracted[key]).strip().lower() == str(true_val).strip().lower():
-            correct.append(key)
-        else:
-            incorrect.append({"field": key, "expected": true_val, "got": extracted[key]})
-
-    total    = len(ground_truth)
-    accuracy = round(len(correct) / total, 4) if total > 0 else 0.0
-
-    return {
-        "accuracy":  accuracy,
-        "correct":   correct,
-        "incorrect": incorrect,
-        "missing":   missing,
-    }
-
-
-# ---------------------------------------------------------------------------
-# 8. WITH vs WITHOUT PROVENANCE CARD DELTA
-# ---------------------------------------------------------------------------
-
-def provenance_card_delta(
-    description_without_card: str,
-    description_with_card: str,
-    reference: str,
-    checklist: list[str] = None,
-) -> dict:
-    """
-    Core metric for the research question: does adding a provenance card
-    actually improve model output quality?
-
-    Computes delta across ROUGE-L F1 and coverage score.
-
-    Args:
-        description_without_card: Final description produced without a card.
-        description_with_card:    Final description produced with a card prepended.
-        reference:                Gold-standard description.
-        checklist:                Attribute checklist for coverage scoring.
-
-    Returns:
-        dict with per-metric absolute deltas and a composite improvement score.
-    """
-    rouge_without  = rouge_l(description_without_card, reference)["f1"]
-    rouge_with     = rouge_l(description_with_card,    reference)["f1"]
-
-    coverage_without = factual_coverage_score(description_without_card, checklist)["score"]
-    coverage_with    = factual_coverage_score(description_with_card,    checklist)["score"]
-
-    rouge_delta    = round(rouge_with    - rouge_without,    4)
-    coverage_delta = round(coverage_with - coverage_without, 4)
-    composite      = round((rouge_delta + coverage_delta) / 2, 4)
-
-    return {
-        "rouge_l_without":    rouge_without,
-        "rouge_l_with":       rouge_with,
-        "rouge_l_delta":      rouge_delta,
-        "coverage_without":   coverage_without,
-        "coverage_with":      coverage_with,
-        "coverage_delta":     coverage_delta,
-        "composite_delta":    composite,
-        "card_is_beneficial": composite > 0,
-    }
 
 
 def calculate_perplexity(text, model_name="gpt2"):

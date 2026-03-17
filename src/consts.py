@@ -55,16 +55,16 @@ FLOWCEPT_ALL_KEYS = (
 
 # yProv4ML: keys from the main activity block
 YPROV_ACTIVITY_KEYS = [
-    "yprov:experiment_name",  # human-readable experiment label
-    "yprov:run_id",           # integer run counter
-    "yprov:python_version",   # Python version used during the run
-    "yprov:PID",              # process UUID
-    "yprov:global_rank",      # distributed rank (0 = master)
-    "yprov:provenance_path",  # directory where provenance files are written
-    "yprov:artifact_uri",     # URI of the run's artifact directory
-    "yprov:experiment_dir",   # root experiment directory
-    "prov:startedAtTime",     # ISO-8601 run start time
-    "prov:endedAtTime",       # ISO-8601 run end time
+    "experiment_name",  # human-readable experiment label
+    "run_id",           # integer run counter
+    "python_version",   # Python version used during the run
+    "PID",              # process UUID
+    "global_rank",      # distributed rank (0 = master)
+    "provenance_path",  # directory where provenance files are written
+    "artifact_uri",     # URI of the run's artifact directory
+    "experiment_dir",   # root experiment directory
+    "startedAtTime",     # ISO-8601 run start time
+    "endedAtTime",       # ISO-8601 run end time
 ]
 
 # yProv4ML: entity keys (dataset-level provenance, stored as prov:value strings)
@@ -88,14 +88,14 @@ YPROV_ENTITY_KEYS = [
 
 # yProv4ML: GPU telemetry entity prefixes (apple_gpu/metric/step)
 YPROV_GPU_METRIC_KEYS = [
-    "apple_gpu/cpu_usage",
-    "apple_gpu/memory_usage",
-    "apple_gpu/disk_usage",
-    "apple_gpu/gpu_memory_power",
-    "apple_gpu/gpu_memory_usage",
-    "apple_gpu/gpu_usage",
-    "apple_gpu/gpu_power_usage",
-    "apple_gpu/gpu_temperature",
+    "cpu_usage",
+    "memory_usage",
+    "disk_usage",
+    "gpu_memory_power",
+    "gpu_memory_usage",
+    "gpu_usage",
+    "gpu_power_usage",
+    "gpu_temperature",
 ]
 
 # All yProv keys flattened (used as the default checklist for _Y.json)
@@ -103,5 +103,5 @@ YPROV_ALL_KEYS = YPROV_ACTIVITY_KEYS + YPROV_ENTITY_KEYS
 
 # Generic fallback (used when format cannot be detected)
 DEFAULT_PROVENANCE_CHECKLIST = list(dict.fromkeys(
-    FLOWCEPT_WORKFLOW_KEYS + YPROV_ACTIVITY_KEYS + YPROV_ENTITY_KEYS
+    FLOWCEPT_WORKFLOW_KEYS + YPROV_ALL_KEYS
 ))

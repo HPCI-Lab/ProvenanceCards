@@ -14,9 +14,9 @@ RESULTS_DIR = Path("results")
 
 MODELS_TO_TEST = [
     # {"name": "Qwen2.5-Coder-7B", "model": "qwen2.5-coder:7b"},
-    {"name": "Llama-3.2-3B",     "model": "llama3.2:3b"},
+    # {"name": "Llama-3.2-3B",     "model": "llama3.2:3b"},
     # {"name": "Phi-4-Mini",       "model": "phi4-mini"},
-    # {"name": "Mistral-7B-v0.3",  "model": "mistral:7b"},
+    {"name": "Mistral-7B-v0.3",  "model": "mistral:7b"},
 ]
 
 def ollama_chat(model: str, messages: list, temperature: float = 0.1, num_predict: int = None) -> dict:
@@ -159,12 +159,26 @@ class OllamaBenchmark:
 
 if __name__ == "__main__":
     FILES = [
-        "jsons/nasa_F.jsonl",
+        # "jsons/nasa_F.jsonl",
         # "jsons/nasa_Y.json",
         # "jsons/train_test_splits_F.jsonl",
         # "jsons/train_test_splits_Y.json",
         # "jsons/turbolence_F.jsonl",
         # "jsons/turbolence_Y.json",
+        # "jsons/example_F.jsonl",
+        # "jsons/example_Y.json",
+        # "jsons/fusion_F.jsonl",
+        # "jsons/fusion_Y.json",
+        "cards/nasa_F.md",
+        "cards/nasa_Y.md",
+        "cards/train_test_splits_F.md",
+        "cards/train_test_splits_Y.md",
+        "cards/turbolence_F.md",
+        "cards/turbolence_Y.md",
+        "cards/example_F.md",
+        "cards/example_Y.md",
+        "cards/fusion_F.md",
+        "cards/fusion_Y.md",
     ]
 
     tester = OllamaBenchmark(MODELS_TO_TEST)
