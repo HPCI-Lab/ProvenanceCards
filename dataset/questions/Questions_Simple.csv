@@ -1,0 +1,25 @@
+Index,Category,Question,Provenance Type
+0,Control Flow,What was the specific execution order of the preprocessing and training tasks?,Retrospective
+1,Control Flow,Which conditional triggers were used to initiate an early-stopping task based on validation loss?,Retrospective
+2,Control Flow,What are the task dependencies between the data-loading stage and the model initialization stage?,Prospective
+3,Control Flow,Did the fine-tuning workflow follow a linear sequence or a distributed fan-out/fan-in structure?,Prospective
+4,Control Flow,Which iteration of the hyperparameter optimization loop was executing when the checkpoint was generated?,Retrospective
+5,Control Flow,Was the model evaluation task successfully completed before the final weight export task?,Retrospective
+6,Scheduling,On which specific hardware node or hostname was the fine-tuning training task executed?,Retrospective
+7,Scheduling,What was the specific GPU device ID assigned to the training process by the resource manager?,Retrospective
+8,Scheduling,Was the training job scheduled on a cloud-based GPU instance or an on-premise HPC cluster?,Prospective
+9,Scheduling,What was the priority level or queue type used for this training job in the scheduling system?,Retrospective
+10,Scheduling,How many CPU cores and how much system RAM were reserved for the training task?,Prospective
+11,Scheduling,What was the network latency between the compute node and the data storage node during the task?,Telemetry
+12,Dataflow,What specific input dataset entities were used for this particular fine-tuning run?,Retrospective
+13,Dataflow,What mathematical transformation or tokenization formula was applied to the raw text entities?,Data Flow
+14,Dataflow,What were the output model weight entities generated after the training task finished?,Retrospective
+15,Dataflow,How are the input prompt entities connected to the generated response entities in the instruction-tuning set?,Data Flow
+16,Dataflow,What was the unique hash or version ID of the configuration file used as an input to the training task?,Data Flow
+17,Dataflow,How did the data flow from the raw dataset repository into the fine-tuning adapter layers?,Data Flow
+18,Telemetry,What was the average GPU utilization percentage recorded during the fine-tuning epoch?,Retrospective
+19,Telemetry,What was the peak VRAM (Video RAM) consumption during the largest training batch?,Retrospective
+20,Telemetry,What was the real-time power consumption (in Watts) of the GPU during the training task?,Retrospective
+21,Telemetry,What were the exact start and end timestamps for each training epoch task?,Retrospective
+22,Telemetry,Were any thermal throttling events or high-temperature warnings recorded during execution?,Retrospective
+23,Telemetry,What was the total wall-clock execution time for the entire fine-tuning workflow?,Retrospective

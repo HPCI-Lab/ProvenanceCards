@@ -1,0 +1,34 @@
+q,a,reasoning
+How many activities are present in the whole workflow?,1 (pytorch-native-qlora-adaptation),4_workflow.md §5 Execution Record: one block
+What is the final status of the workflow?,Completed,4_workflow.md §1 Execution Status
+What is the time to completion of the workflow?,20h 00m 00s,4_workflow.md §1 Execution Duration
+List all the parameters of the first activity of the workflow,"batch: 64, len: 256k, precision: 4-bit, dropout: 0.05",4_workflow.md §5 Block[1] Parameters
+What hardware was used in the workflow?,4x NVIDIA RTX 4090 (Consumer GPU Target),4_workflow.md §2 Compute Hardware
+Who is responsible for this workflow (person or username or entity)?,Empero AI Team (Lead Practitioner); empero-build-system (Execution Triggerer),4_workflow.md §3 Actors
+What was the specific execution order of the tasks?,"Single activity: pytorch-native-qlora-adaptation, 06:30 to 01:30 next day",4_workflow.md §5 Block[1] timestamps
+List all the parameters for the whole workflow process,"batch: 64, len: 256k, precision: 4-bit, dropout: 0.05; SFT stage also used Global Batch 64, LR 5e-5, 33k steps, AdamW",4_workflow.md §5 Block[1] Parameters; 4_datacard.md SFT Training table
+What was the peak RAM consumption during the workflow?,Not reported in workflow card (model card notes ~17 GB VRAM with 4-bit),4_workflow.md — no RAM field; 4_modelcard_finetuned.md 4-bit Memory Usage table
+Has the model been trained in a distributed setting?,Yes — 4x NVIDIA RTX 4090 on Empero Cloud Cluster (Kubernetes),4_workflow.md §2 Compute Hardware and Resource Manager
+What was the real-time power consumption (in Watts) of the GPU during the workflow?,Not reported,4_workflow.md — no power field
+Which inputs influenced the output in the workflow?,base-weights (nvidia/Nemotron-Cascade-2-30B-A3B) and rl-dataset (nvidia/Nemotron-Cascade-2-RL-data),4_workflow.md §5 Block[1] Inputs Consumed
+What is the total energy use for completing the workflow?,Not reported,4_workflow.md — no energy field
+List all input files with size larger than 100Mb,Dataset total ~2.73 GB (all subsets); individual file sizes not listed,4_datacard.md Dataset Quantification: Total Disk Size ~2.73 GB
+List all different file types used as input,JSONL (.jsonl),4_datacard.md Dataset Format: Format: JSONL
+Identify the largest output,openNemo-Cascade-2-30B-A3B weights (~17 GB at 4-bit / ~65 GB at bf16),4_modelcard_finetuned.md 4-bit Memory Usage table
+What is the science domain of the dataset?,"General AI / Multi-domain (math, code, instruction-following, safety, SWE, RL)",4_datacard.md Dataset Description and subsets
+Does the dataset have a predetermined train-test split?,Train only (all subsets have only train split),4_datacard.md configs: each subset lists only 'train' split
+How many samples are present in the whole dataset?,"73,809 total (RL dataset); SFT dataset has ~24M samples across domains",4_datacard.md Dataset Quantification table (RL); Statistics table (SFT)
+What is the data type of the ground truth (if present)?,"Text (structured JSON/JSONL with prompt, response, pass_rate fields)",4_datacard.md Dataset Format: Text + Metadata; Columns description
+What is the specific task for which the dataset was created?,Reinforcement learning and instruction-following fine-tuning of LLMs,4_datacard.md Dataset Description
+What is the size in byte of one sample?,Not reported,4_datacard.md — no per-sample byte size
+What is the total size of the whole dataset?,~2.73 GB (RL dataset); SFT dataset size not stated,4_datacard.md Dataset Quantification: Total Disk Size ~2.73 GB
+What are the designed uses for this model?,Drop-in replacement for Nemotron-Cascade-2; enables 4-bit quantization and QLoRA fine-tuning on consumer GPUs,4_modelcard_finetuned.md first paragraph and Why? section
+How many epochs have been used in the final training?,SFT: ~1.5 epochs; RL adaptation: not stated in epochs,4_datacard.md SFT Training section: 'optimal performance after approximately 1.5 epochs'
+How many model parameters (weights) does the model have?,"30.87B total, ~3B active per token",4_modelcard_finetuned.md Architecture table: Total parameters 30.87B
+What is the science domain of the model?,General AI / Reasoning / Coding / Mathematics,"4_modelcard_pretrained.md tags: reasoning, general-purpose"
+What is the task solved by this model (regression or classification or forecast etc.)?,Text generation / reasoning / agentic coding (causal LM),4_modelcard_finetuned.md pipeline_tag: text-generation; benchmark tasks
+What is the intended use of this model?,"General-purpose reasoning, math, coding, and agentic tasks; quantized for consumer GPU use",4_modelcard_pretrained.md Introduction; 4_modelcard_finetuned.md Why? section
+What is the size of the final model in Mb?,"~17,000 MB (17 GB) in 4-bit NF4; ~65,000 MB (65 GB) in bf16",4_modelcard_finetuned.md 4-bit Memory Usage table
+What technique was used to train the model?,SFT + Cascade RL (original); pure-PyTorch 4-bit quantization & QLoRA adaptation (openNemo port),4_workflow.md §5 Block[1] Activity Type; 4_modelcard_pretrained.md Introduction
+What is the claimed performance of this model?,IMO 2025: 35 pts (Gold); IOI 2025: 439.3 (Gold); AIME 2025: 92.4; LiveCodeBench v6: 87.2; MMLU-Pro: 79.8; GPQA-Diamond: 76.1,4_modelcard_finetuned.md Benchmark Results table; 4_modelcard_pretrained.md Benchmark table
+Are the performance shown in the pretrained version improved in the finetuning?,The finetuned openNemo card reports same benchmark numbers as the pretrained NVIDIA model — the port preserves performance; no degradation shown,4_modelcard_finetuned.md Benchmark Results vs 4_modelcard_pretrained.md Benchmark table — identical scores
