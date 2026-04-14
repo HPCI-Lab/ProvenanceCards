@@ -5,7 +5,7 @@ import os
 import time
 from google import genai
 import pandas as pd
-client = genai.Client(api_key="AIzaSyD-mea2Vehun3-UgXyIeyovwCsvNlt-tUk")
+client = genai.Client(api_key=open(".gkey").read())
 
 OUTPUTS_DIR = Path("dataset/answers")
 os.makedirs(OUTPUTS_DIR, exist_ok=True)

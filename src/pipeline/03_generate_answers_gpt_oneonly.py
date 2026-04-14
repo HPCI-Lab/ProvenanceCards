@@ -6,7 +6,7 @@ import time
 import pandas as pd
 import requests
 
-key = 'AqGqRAP5HKB4rqMcx6SuYd8IjQx8RLNLM0JDEgGJsUN7LBCWC7N1JQQJ99BGACYeBjFXJ3w3AAABACOGJ4nd'
+key = open(".env").read()
 endpoint = "https://aoai-eus-wrkflowecosystems.openai.azure.com/"
 deployment_name = "gpt-4" # Change this to your working deployment name
 api_version = "2023-05-15"
