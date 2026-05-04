@@ -1,6 +1,0 @@
-Given a trained model, what are the geographic coordinates, oil basin and field, and the number of seismic slices of the seismic in the training dataset?
-Given a trained model, what is the tile size, the noise filter threshold, and the ranges of seismic slices that were selected to generate the training set used to adjust this model?
-Given a training set, what are the values for all hyperparameters and the evaluation measure values associated with the trained model with least loss?
-What are the average, min, and max execution times of each batch iteration inside each epoch of the deep neural network training, given a training dataset?
-What is the execution time on average per batch iteration, per epoch, and what are the evaluation metrics of the trained models that used the training dataset generated for a given range of seismic slices?
-Given the training dataset used in Q5, what was the seismic data file used, along with its number of slices, related oil basin, and field?

@@ -1,0 +1,34 @@
+Category,q,Type,Difficulty,a,reasoning
+Control Flow,How many activities are present in the whole workflow?,workflow,easy,Cannot be determined — no workflow information in data card,Not present in data card
+Control Flow,What is the final status of the workflow?,workflow,easy,Cannot be determined — no workflow information in data card,Not present in data card
+Control Flow,What is the time to completion of the workflow?,workflow,easy,Cannot be determined — no workflow information in data card,Not present in data card
+DataFlow,List all the parameters of the first activity of the workflow,workflow,easy,Cannot be determined — no workflow information in data card,Not present in data card
+Scheduling,What hardware was used in the workflow?,workflow,easy,Cannot be determined — no workflow information in data card,Not present in data card
+Scheduling,Who is responsible for this workflow (person or username or entity)?,workflow,easy,Cannot be determined — Authors field is empty,Section 2 (Provenance): Authors = Not specified
+Control Flow,What was the specific execution order of the tasks?,workflow,medium,Cannot be determined — no workflow information in data card,Not present in data card
+Control Flow,List all the parameters for the whole workflow process,workflow,medium,Cannot be determined — no workflow information in data card,Not present in data card
+Telemetry,What was the peak RAM consumption during the workflow?,workflow,medium,Cannot be determined — no telemetry information in data card,Not present in data card
+Scheduling,Has the model been trained in a distributed setting?,workflow,medium,Cannot be determined — no workflow information in data card,Not present in data card
+Telemetry,What was the real-time power consumption (in Watts) of the GPU during the workflow?,workflow,hard,Cannot be determined — no telemetry information in data card,Not present in data card
+DataFlow,Which inputs influenced the output in the workflow?,workflow,hard,Cannot be determined — no workflow information in data card,Not present in data card
+Telemetry,What is the total energy use for completing the workflow?,workflow,hard,Cannot be determined — no telemetry information in data card,Not present in data card
+DataFlow,List all input files with size larger than 100Mb,data,easy,None — the only file is 1.46 MB which is below 100 MB,Section 1 (Dataset Overview): Size = 1.46 MB
+DataFlow,List all different file types used as input,data,easy,.npy,Section 1 (Dataset Overview): Format = .npy
+DataFlow,Identify the largest output,data,easy,Cannot be determined — no output files listed in data card,Not present in data card
+Control Flow,What is the science domain of the dataset?,data,easy,General (no specific domain detected),Section 8 (AI Readiness Assessment): Detected Domain = general
+DataFlow,Does the dataset have a predetermined train-test split?,data,medium,No — Train/Val/Test Split field is empty,Section 5 (Transformations): Train/Val/Test Split is blank
+DataFlow,How many samples are present in the whole dataset?,data,medium,0 records reported,Section 1 (Dataset Overview): Records = 0
+DataFlow,What is the data type of the ground truth (if present)?,data,medium,No ground truth — dataset has no labels,Section 6 (Annotations): Has Labels = No
+Control Flow,What is the specific task for which the dataset was created?,data,medium,Cannot be determined — Purpose field is empty,Section 1 (Dataset Overview): Purpose field is blank
+DataFlow,What is the size in byte of one sample?,data,hard,Cannot be determined — 0 records reported so division is undefined,Section 1: Records = 0; size per sample cannot be computed
+DataFlow,What is the total size of the whole dataset?,data,hard,1.46 MB (approximately 1530726 bytes),Section 1 (Dataset Overview): Size = 1.46 MB
+Control Flow,What are the designed uses for this model?,model,easy,Cannot be determined — no model information in data card,Not present in data card
+Control Flow,How many epochs have been used in the final training?,model,easy,Cannot be determined — no model information in data card,Not present in data card
+DataFlow,How many model parameters (weights) does the model have?,model,easy,Cannot be determined — no model information in data card,Not present in data card
+Control Flow,What is the science domain of the model?,model,easy,Cannot be determined — no model information in data card,Not present in data card
+Control Flow,What is the task solved by this model (regression or classification or forecast etc.)?,model,medium,Cannot be determined — no model information in data card,Not present in data card
+Control Flow,What is the intended use of this model?,model,medium,Cannot be determined — no model information in data card,Not present in data card
+DataFlow,What is the size of the final model in Mb?,model,medium,Cannot be determined — no model information in data card,Not present in data card
+Scheduling,What technique was used to train the model?,model,medium,Cannot be determined — no model information in data card,Not present in data card
+Telemetry,What is the claimed performance of this model?,model,hard,Cannot be determined — no model information in data card,Not present in data card
+Control Flow,Are the performance shown in the pretrained version improved in the finetuning?,model,hard,Cannot be determined — no model information in data card,Not present in data card
