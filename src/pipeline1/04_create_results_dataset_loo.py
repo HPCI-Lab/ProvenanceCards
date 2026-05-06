@@ -7,9 +7,11 @@ import sys
 sys.path.append("./")
 from src.metrics_pipeline import *
 
-PATH_ANSWERS = Path("dataset/answers/")
+PATH_ANSWERS = Path("dataset/answers/template_v5/")
 PATH_CARDS = Path("dataset/concat/")
-PATH_QUESTIONS = Path("dataset/questions/Questions_Nicola.csv")
+PATH_QUESTIONS = Path("dataset/questions/Questions_latest.csv")
+
+USECASES = [1, 2, 4, 5]
 
 def get_params_from_path(path): 
     path = path.split("/")[-1]
@@ -25,7 +27,7 @@ def get_metrics_for_answer(path):
     answers.columns = ["question", "answer"]
     answers = answers.fillna("")
 
-    gts = pd.read_csv(f"dataset/gt/{usecase}_answers.csv", sep=",")
+    gts = pd.read_csv(f"dataset/gt/{usecase}_answers.csv", sep=";")
 
     # card_data = open(PATH_CARDS / f"{usecase}_concat_without_{without}.md", "r").read()
 
@@ -64,14 +66,21 @@ def get_metrics_for_answer(path):
 
 
 if __name__ == "__main__":
-    all_answers = [PATH_ANSWERS / f for f in os.listdir(PATH_ANSWERS) if "without" in f]
+    all_answers = [PATH_ANSWERS / f for f in os.listdir(PATH_ANSWERS) if "without" in f and int(f.split("_")[0]) in USECASES]
 
     final_results = []
-    for answer in tqdm(all_answers):
+    for i, answer in enumerate(tqdm(all_answers)):
+        if Path(f"{i}_boh.csv").exists(): 
+            d = pd.read_csv(f"{i}_boh.csv", sep=";", index_col=0)
+            d = [eval(f) for f in d.iloc[:, 0].values.tolist()]
+            final_results.extend(d)
+            continue
         results = get_metrics_for_answer(answer)
         # question_id = int(str(answer).split("/")[-1].replace(".md", "").split("_")[-1])
 
-        final_results.extend(results)
+        # final_results.extend(results)
+        pd.Series(results).to_csv(f"{i}_boh.csv", sep=";")
     
+
     data = pd.DataFrame(final_results)
     data.to_csv("results/leaveoneout2.csv", sep=";")

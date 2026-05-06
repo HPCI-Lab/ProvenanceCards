@@ -1,0 +1,33 @@
+How many activities are present in the whole workflow?	The workflow includes pretraining, knowledge distillation, pruning, supervised fine-tuning (SFT), rejection sampling (RS), direct preference optimization (DPO), quantization-aware training (QAT), LoRA adaptation, and evaluation. This totals at least 8 distinct activities.
+What is the final status of the workflow?	The final status is a released, instruction-tuned, multilingual LLM (Llama 3.2) available for commercial and research use, with safety and performance benchmarks reported.
+What is the time to completion of the workflow?	The total training time for Llama 3.2 1B and 3B models is 370,000 and 460,000 GPU hours respectively, but the exact wall-clock time is not specified.
+List all the parameters of the first activity of the workflow	The first activity, pretraining, uses up to 9 trillion tokens of publicly available multilingual text, with model sizes of 1.23B and 3.21B parameters, context length up to 128k, and Grouped-Query Attention enabled.
+What hardware was used in the workflow?	Meta's custom-built GPU cluster with H100-80GB GPUs (TDP of 700W) was used for training, fine-tuning, quantization, annotation, and evaluation.
+Who is responsible for this workflow (person or username or entity)?	Meta Platforms, Inc. (or Meta Platforms Ireland Limited for EEA/Switzerland) is responsible for the workflow and model development.
+What was the specific execution order of the tasks?	The order is: pretraining → knowledge distillation/pruning → supervised fine-tuning (SFT) → rejection sampling (RS) → direct preference optimization (DPO) → quantization-aware training (QAT) → LoRA adaptation → evaluation.
+List all parameters for all activites in the workflow	Pretraining: up to 9T tokens, 1.23B/3.21B params, context 128k; Knowledge distillation: Llama 3.1 8B/70B logits; SFT: human/synthetic data; RS/DPO: alignment data; QAT: 4-bit groupwise, 8-bit activations; LoRA: adapters in BF16; Evaluation: standard benchmarks.
+What was the peak RAM consumption during the workflow?	Peak RAM (resident set size) during inference on 3B model is 7,419 MB (BF16 baseline); training RAM is not specified.
+Has the model been trained in a distributed setting?	Yes, training was performed on Meta's custom GPU cluster, implying distributed training across multiple H100-80GB GPUs.
+What was the total power consumption in Watts of the GPU(s) during the workflow?	Each GPU used has a power consumption (TDP) of 700W; total power depends on the number of GPUs and hours, but per-GPU TDP is 700W.
+What significant input artifacts are involved in the generation of the finetuned model?	Significant input artifacts include up to 9T tokens of multilingual text data, Llama 3.1 8B/70B model logits, and human/synthetic alignment datasets.
+What is the total energy use for completing the workflow?	Total energy use is not directly stated, but training used 916,000 GPU hours at 700W per GPU, resulting in 240 tons CO2eq location-based emissions.
+List all input files with size larger than 100Mb	Pretraining data (up to 9T tokens) and model checkpoints (1.23B/3.21B parameters) are each much larger than 100MB; specific file names are not provided.
+List all different file types used as input	Input file types include text corpora (multilingual text/code), model checkpoint files, and logit files from Llama 3.1 models.
+Identify the largest output	The largest output is the Llama 3.2 3B model checkpoint, with a PTE file size of 6,129 MB (BF16 baseline).
+What is the science domain of the dataset?	The dataset is in the domain of natural language processing (NLP), covering multilingual text and code.
+Does the dataset have a predetermined train-test split?	No explicit mention of a predetermined train-test split; benchmarks and evaluation datasets are used separately for testing.
+How many samples are present in the whole dataset?	The dataset contains up to 9 trillion tokens; the number of samples (documents or sequences) is not specified.
+What is the data type of the ground truth (if present)?	Ground truth data types include text (for SFT, RS, DPO) and token-level targets (for knowledge distillation).
+What is the specific task for which the dataset was created?	The dataset is created for training large language models for multilingual text generation, summarization, rewriting, and instruction following.
+What is the size in byte of one sample?	Not specified; depends on tokenization and sequence length, but typically a sample (sequence) is several kilobytes.
+What is the total size of the whole dataset?	Not specified, but with up to 9 trillion tokens, the dataset is likely multiple terabytes in size.
+What are the designed uses for this model?	Designed uses include commercial and research applications in multilingual dialogue, agentic retrieval, summarization, writing assistants, and prompt rewriting.
+How many epochs have been used in the finetuning?	Not specified in the card; only the number of SFT, RS, and DPO rounds is mentioned.
+How many model parameters (weights) does the model have?	Llama 3.2 1B has 1.23 billion parameters; Llama 3.2 3B has 3.21 billion parameters.
+What is the science domain of the model?	The model is in the domain of natural language processing (NLP).
+What is the task solved by this model (regression or classification or forecast etc.)?	The model solves generative tasks: text generation, summarization, rewriting, instruction following, and code generation.
+What is the intended use of this model?	The intended use is for commercial and research applications in multilingual chat, agentic systems, summarization, and writing assistance.
+What is the size of the final model in Mb?	The Llama 3.2 3B BF16 model is 6,129 MB; quantized versions are smaller (e.g., 2,435 MB for SpinQuant).
+What technique was used to fine-tune the model? (e.g. LoRa; GAN...)	Supervised fine-tuning (SFT), rejection sampling (RS), direct preference optimization (DPO), quantization-aware training (QAT), and LoRA adaptation were used.
+What is the claimed performance of this model?	Claimed performance: Llama 3.2 3B achieves 63.4 on MMLU, 77.7 on GSM8K (CoT), 78.6 on ARC-C, and 69.8 on Hellaswag (all instruction-tuned, English benchmarks).
+Are the performance shown in the pretrained version improved in the finetuning?	Yes, instruction-tuned models show improved performance over base pretrained models on benchmarks such as MMLU, GSM8K, and ARC-C.

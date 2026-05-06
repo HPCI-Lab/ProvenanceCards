@@ -1,0 +1,33 @@
+How many activities are present in the whole workflow?	The workflow includes the following activities: pretraining the DistilBERT base model, fine-tuning the model on the phishing email detection dataset, and evaluation of the fine-tuned model. Based on the cards, at least three main activities are present: pretraining, fine-tuning, and evaluation.
+What is the final status of the workflow?	The final status of the workflow is successful completion, as the fine-tuned model achieves high performance metrics and is available for use and download.
+What is the time to completion of the workflow?	The pretraining of DistilBERT took 90 hours on 8 V100 GPUs. The fine-tuning for phishing email detection was performed for 3 epochs, but the exact time for fine-tuning is not specified in the cards.
+List all the parameters of the first activity of the workflow	The first activity is pretraining DistilBERT. Parameters include: lowercased and tokenized text using WordPiece (vocab size 30,000), input length up to 512 tokens, 15% token masking (80% [MASK], 10% random, 10% unchanged), trained on BookCorpus and Wikipedia, 8 V100 GPUs, 90 hours, and three objectives (distillation loss, MLM, cosine embedding loss).
+What hardware was used in the workflow?	The pretraining of DistilBERT was performed on 8 NVIDIA V100 GPUs, each with 16 GB of memory.
+Who is responsible for this workflow (person or username or entity)?	The DistilBERT model was developed by Victor Sanh, Lysandre Debut, Julien Chaumond, and Thomas Wolf. The fine-tuned phishing detection model was created by the Hugging Face user/entity "cybersectony".
+What was the specific execution order of the tasks?	The execution order is: (1) Pretraining DistilBERT on BookCorpus and Wikipedia, (2) Fine-tuning DistilBERT on the phishing email detection dataset for 3 epochs, (3) Evaluating the fine-tuned model on accuracy, F1-score, precision, and recall.
+List all parameters for all activites in the workflow	Pretraining: lowercased/tokenized text, WordPiece vocab size 30,000, input length <512, 15% masking (80% [MASK], 10% random, 10% unchanged), BookCorpus+Wikipedia, 8x16GB V100, 90 hours, distillation/MLM/cosine loss. Fine-tuning: phishing email detection dataset, 3 epochs, Hugging Face Trainer API. Evaluation: accuracy, F1, precision, recall.
+What was the peak RAM consumption during the workflow?	The cards do not specify the peak RAM consumption during pretraining or fine-tuning.
+Has the model been trained in a distributed setting?	Yes, the DistilBERT base model was pretrained in a distributed setting using 8 NVIDIA V100 GPUs.
+What was the total power consumption in Watts of the GPU(s) during the workflow?	The cards do not provide information about the total power consumption in Watts of the GPUs during the workflow.
+What significant input artifacts are involved in the generation of the finetuned model?	Significant input artifacts include the BookCorpus and English Wikipedia datasets for pretraining, and the phishing email detection dataset (cybersectony/PhishingEmailDetectionv2.0) for fine-tuning.
+What is the total energy use for completing the workflow?	The cards do not specify the total energy use for completing the workflow.
+List all input files with size larger than 100Mb	The phishing email detection dataset has splits: train (47,241,927 bytes ≈ 47MB), validation (5,052,323 bytes ≈ 5MB), test (14,856,442 bytes ≈ 14MB). None of these files exceed 100MB. The download size is 40,289,388 bytes (≈40MB). No input file larger than 100MB is listed.
+List all different file types used as input	Input files are text-based datasets, likely in plain text or Hugging Face dataset format (e.g., .jsonl, .csv, or binary dataset shards), but the exact file types are not specified.
+Identify the largest output	The largest output is the fine-tuned DistilBERT phishing email detection model, available for download and inference.
+What is the science domain of the dataset?	The dataset is in the domain of cybersecurity, specifically focused on phishing detection in emails and URLs.
+Does the dataset have a predetermined train-test split?	Yes, the dataset is split into train (120,000 samples), validation (20,000 samples), and test (60,000 samples) sets.
+How many samples are present in the whole dataset?	The dataset contains a total of 200,000 samples (120,000 train, 20,000 validation, 60,000 test).
+What is the data type of the ground truth (if present)?	The ground truth is a multi-class label (integer) with four possible classes: legitimate_email, phishing_email, legitimate_url, phishing_url.
+What is the specific task for which the dataset was created?	The dataset was created for multi-class classification of emails and URLs as legitimate or phishing.
+What is the size in byte of one sample?	Each sample consists of a text string and an integer label. The average size is not specified, but the total dataset size is 67,150,692 bytes for 200,000 samples, so approximately 335 bytes per sample.
+What is the total size of the whole dataset?	The total size of the dataset is 67,150,692 bytes (about 67 MB).
+What are the designed uses for this model?	The model is designed for phishing detection in emails and URLs, classifying content as legitimate or phishing for cybersecurity applications.
+How many epochs have been used in the finetuning?	The model was fine-tuned for 3 epochs.
+How many model parameters (weights) does the model have?	The number of parameters is not explicitly stated, but DistilBERT base has approximately 66 million parameters.
+What is the science domain of the model?	The model is in the domain of cybersecurity, specifically for phishing detection.
+What is the task solved by this model (regression or classification or forecast etc.)?	The model solves a multi-class classification task.
+What is the intended use of this model?	The intended use is to detect phishing in emails and URLs, helping to identify and filter malicious content.
+What is the size of the final model in Mb?	The size of the final model is not specified, but DistilBERT base models are typically around 250 MB.
+What technique was used to fine-tune the model? (e.g. LoRa; GAN...)	The model was fine-tuned using the Hugging Face Trainer API for sequence classification.
+What is the claimed performance of this model?	The model claims an accuracy of 99.58%, F1-score of 99.579, precision of 99.583, and recall of 99.58.
+Are the performance shown in the pretrained version improved in the finetuning?	Yes, the fine-tuned model achieves high performance on phishing detection, which is a downstream task not addressed by the pretrained DistilBERT base model.

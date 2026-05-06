@@ -7,7 +7,7 @@ concat = Path("dataset/concat/")
 os.system(f"rm -rf {concat}")
 os.makedirs(concat, exist_ok=True)
 
-files = [f for f in os.listdir(path)]
+files = [f for f in os.listdir(path)]# + [f for f in os.listdir(path / "workflow_cards/template_v5")]
 
 for I in range(1, 6): 
     relevant_workflow = [file for file in files if file.split("_")[0] == str(I)]

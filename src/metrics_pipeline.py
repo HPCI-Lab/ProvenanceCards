@@ -123,14 +123,15 @@ def llm_as_judge(question: str, answer: str, gt: str, model="llama3.2:3b") -> fl
     
     Question: {question}
     Ground Truth: {gt}
-    Student Answer: {answer}
+    Answer: {answer}
     
-    Rate the Student Answer based on its semantic similarity to the Ground Truth. 
+    Rate the Answer based on its semantic similarity to the Ground Truth. 
     Ignore minor formatting issues. 
     Provide a score between 0.0 (completely wrong) and 1.0 (perfectly accurate).
     If you believe the answer does not directly address the question, rate 0.0.
-    
-    Output ONLY the numerical score.
+
+    DO NOT explain the answer, I want a single token as output from your response. 
+    Output ONLY the numerical score, so that I am able to just: return float(score_str_from_you).
     Score:"""
 
     try:
@@ -139,5 +140,9 @@ def llm_as_judge(question: str, answer: str, gt: str, model="llama3.2:3b") -> fl
         score_str = response['response'].strip()
         return float(score_str)
     except Exception as e:
-        print(f"Error during LLM judging: {e}, {response['response'].strip()}")
+        try: 
+            r = float(response['response'].strip().split("\n")[0])
+            return r
+        except: 
+            print(f"Error during LLM judging: {e}, {response['response'].strip()}")            
         return 0.0
