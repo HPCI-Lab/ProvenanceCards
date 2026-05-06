@@ -2,4 +2,4 @@ pandas
 tqdm
 requests
 numpy
-sklearn
+scikit-learn
