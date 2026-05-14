@@ -1,0 +1,34 @@
+Category,Question,Type,Difficulty,Answer,Rating_G,Rating_N
+Control Flow,How many activities are present in the whole workflow?,workflow,easy,11,0.0,1.0
+Control Flow,What is the final status of the workflow?,workflow,easy,FINISHED,1.0,0.0,
+Control Flow,What is the time to completion of the workflow?,workflow,easy,finetuning: 71.172668 seconds.,0.0,0.0
+DataFlow,List all the parameters of the first activity of the workflow,workflow,easy,used.z,0.0,0.0
+Scheduling,What hardware was used in the workflow?,workflow,easy,No hardware (hostname) information is available in the workflow data,0.5,0.0
+Scheduling,Who is responsible for this workflow (person or username or entity)?,workflow,easy,gabrielepadovani,1.0,0.5
+Control Flow,What was the specific execution order of the tasks?,workflow,medium,1778077390.967838_47111_8509108480_3676595841...,0.0,0.0
+Control Flow,List all parameters for all activites in the workflow,workflow,medium,epoch 0 → used.z; all other activities (InputFilesValidation; DomainInference; PipelineCreation; PipelineExecution; PipelineFinalize; OutputGeneration; preprocess; save; elaboration; analysis; and any unspecified activity) have no input parameters.,1.0,0.0
+Telemetry,What was the peak RAM consumption during the workflow?,workflow,medium,The peak RAM consumption during the workflow was 1155825664.,0.5,0.0
+Scheduling,Has the model been trained in a distributed setting?,workflow,medium,No.,0.5,0.0
+Telemetry,What was the total power consumption in Watts of the GPU(s) during the workflow?,workflow,hard,GPU power consumption data not available.,0.8,0.0
+DataFlow,What significant input artifacts are involved in the generation of the finetuned model?,workflow,hard,The finetuned model’s generation uses the input artifact z (value 1).,1.0,0.0
+Telemetry,What is the total energy use for completing the workflow?,workflow,hard,Energy usage data not available,0.0,0.0
+DataFlow,List all input files with size larger than 100Mb,data,easy,No input files have size larger than 100 MB.,0.6,0.0
+DataFlow,List all different file types used as input,data,easy,No input file types are recorded.,0.2,0.0
+DataFlow,Identify the largest output,data,easy,The largest output is 1.0.,1.0,1.0
+Control Flow,What is the science domain of the dataset?,data,easy,The science domain of the dataset is not specified in the available data.,0.7,0.0
+DataFlow,Does the dataset have a predetermined train-test split?,data,medium,No predetermined train-test split information available in the dataset.,1.0,0.0
+DataFlow,How many samples are present in the whole dataset?,data,medium,12,0.0,0.0
+DataFlow,What is the data type of the ground truth (if present)?,data,medium,No ground truth column is present therefore there is no data type for a ground truth.,1.0,0.0
+Control Flow,What is the specific task for which the dataset was created?,data,medium,The dataset was created for the tasks that generate the output `w`; i.e.; InputFilesValidation; DomainInference; PipelineCreation; PipelineExecution; PipelineFinalize; OutputGeneration; preprocess; epoch 0; save; elaboration; and analysis.,0.0,0.0
+DataFlow,What is the size in byte of one sample?,data,hard,The size in bytes of one sample cannot be determined from the available data.,0.5,0.0
+DataFlow,What is the total size of the whole dataset?,data,hard,The total size of the whole dataset is 11.,0.5,0.0
+Control Flow,What are the designed uses for this model?,model,easy,The available data does not contain information about the designed uses for this model.,0.2,0.0
+Control Flow,How many epochs have been used in the finetuning?,model,easy,1,0.0,1.0
+DataFlow,How many model parameters (weights) does the model have?,model,easy,Model parameter count not available,0.0,0.0
+Control Flow,What is the science domain of the model?,model,easy,The science domain is not directly provided in the sampled data.,0.2,0.0
+Control Flow,What is the task solved by this model (regression or classification or forecast etc.)?,model,medium,Insufficient information to determine the task (regression; classification; forecasting; etc.).,0.0,0.0
+Control Flow,What is the intended use of this model?,model,medium,The intended use of this model is not specified in the available data.,0.0,0.0
+DataFlow,What is the size of the final model in Mb?,model,medium,The size of the final model in MB is not available in the provided data.,0.9,0.0
+Scheduling,What technique was used to fine-tune the model? (e.g. LoRa; GAN...),model,medium,The provided data does not contain information about the fine‑tuning technique used for the model.,1.0,0.0
+Telemetry,What is the claimed performance of this model?,model,hard,The claimed performance of the model is a mean duration of approximately 5.66 seconds.,0.7,0.0
+Control Flow,Are the performance shown in the pretrained version improved in the finetuning?,model,hard,No data available to compare pretrained and finetuned performance.,0.2,0.0

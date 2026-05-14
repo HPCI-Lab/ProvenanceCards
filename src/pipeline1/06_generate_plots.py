@@ -112,7 +112,7 @@ savefig("fig1_card_mean_scores.png")
 
 # # clean up 'without' labels in file 2
 modality_rename = {
-    "concat":    "Top Answer\n(all cards)",
+    "baseline":    "Top Answer\n(all cards)",
     "datacard":    "DataCard\nonly",
     "finetuned":   "Finetuning MC\nonly",
     "pretrained":  "Pretraining MC\nonly",
@@ -271,7 +271,6 @@ fig.tight_layout()
 
 savefig("fig5_difficulty_heatmap_aggregated.png")
 
-
 # ═════════════════════════════════════════════════════════════════════════════
 # 7. FIGURE 6 — One Card Only Validation (Heatmap)
 # ═════════════════════════════════════════════════════════════════════════════
@@ -318,6 +317,56 @@ ax.set_xticklabels(["Top Answer", "Only Data Card", "Only Finetuning MC", "Only 
 
 fig.tight_layout()
 savefig("fig6_one_card_validation_heatmap.png")
+
+# ── FIGURE 6 TABLE GENERATION ────────────────────────────────────────────────
+print("\n" + "="*80)
+print("TABLE FOR FIGURE 6: VALUES IN RANGE [0, Top Answer]")
+print("="*80)
+
+# 1. Ensure the pivot is correctly formed
+# We look at the actual values in the 'without' column to avoid key errors
+available_modalities = df2_joined['without'].unique()
+
+# Mapping for the columns (internal names -> display names)
+col_map = {
+    "baseline":    "Top Answer",
+    "datacard":    "Only DataCard",
+    "finetuned":   "Only Finetuning MC",
+    "pretrained":  "Only Pretraining MC",
+    "workflow":    "Only Workflow Card",
+    "workflowcard":"Only Workflow Card" # Handle variant
+}
+
+# 2. Extract the pivoted data
+# We use the 'Type' from questions as the index (Difficulty/Category)
+table_raw = (
+    df2_joined.groupby(["Type", "without"])["composite"]
+    .mean()
+    .unstack("without")
+)
+
+# 3. Handle Scaling: [0, Top Answer] 
+# Absolute values are already in this range relative to the baseline.
+# We will filter and rename to match your request.
+cols_to_print = [c for c in col_map.keys() if c in table_raw.columns]
+final_table = table_raw[cols_to_print].rename(columns=col_map)
+
+# Remove duplicate 'Only Workflow Card' if both 'workflow' and 'workflowcard' exist
+final_table = final_table.loc[:, ~final_table.columns.duplicated()]
+
+print("--- Absolute Mean Scores ---")
+print(final_table.round(4).to_string())
+
+# 4. Normalized Table (Scaled so Top Answer = 1.0)
+print("\n--- Normalized to Top Answer (Baseline = 1.0) ---")
+if "baseline" in table_raw.columns:
+    norm_table = table_raw[cols_to_print].div(table_raw["baseline"], axis=0).rename(columns=col_map)
+    norm_table = norm_table.loc[:, ~norm_table.columns.duplicated()]
+    print(norm_table.round(4).to_string())
+else:
+    print("Baseline column not found, could not normalize.")
+
+print("="*80)
 
 # ═════════════════════════════════════════════════════════════════════════════
 # 8.  FIGURE 7 — Card influence ranking: drop from single-card to baseline (file 2)
