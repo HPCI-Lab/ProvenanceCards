@@ -1,34 +1,34 @@
-Category,Question,Type,Difficulty,Answer,Rating_G,Rating_N
-Control Flow,How many activities are present in the whole workflow?,workflow,easy,There are 11 activities in the workflow.,1.0,0.0
-Control Flow,What is the final status of the workflow?,workflow,easy,The final status of the workflow is **FINISHED**.,1.0,1.0
-Control Flow,What is the time to completion of the workflow?,workflow,easy,The time to completion of the workflow is 71.172668 seconds.,1.0,0.0
-DataFlow,List all the parameters of the first activity of the workflow,workflow,easy,output; disk; duration,0.0,0.0
-Scheduling,What hardware was used in the workflow?,workflow,easy,The workflow used the hostname `1.0.0.127.in-addr.arpa`.,0.7,0.0
-Scheduling,Who is responsible for this workflow (person or username or entity)?,workflow,easy,The workflow is executed by the agent `gabrielepadovani`.,1.0,0.0
-Control Flow,What was the specific execution order of the tasks?,workflow,medium,The tasks were executed in chronological order of their `started_at` timestamps from earliest to latest.,0.3,0.0
-Control Flow,List all parameters for all activites in the workflow,workflow,medium,The workflow contains the following activities: InputFilesValidation; DomainInference; PipelineCreation; PipelineExecution; PipelineFinalize; OutputGeneration; preprocess; epoch 0; save; elaboration; and analysis.,0.0,0.0
-Telemetry,What was the peak RAM consumption during the workflow?,workflow,medium,The peak RAM consumption during the workflow was 3.4 GB.,0.9,0.0
-Scheduling,Has the model been trained in a distributed setting?,workflow,medium,The model was trained in a distributed setting.,1.0,1.0
-Telemetry,What was the total power consumption in Watts of the GPU(s) during the workflow?,workflow,hard,The total power consumption in watts of the GPU(s) during the workflow cannot be determined from the provided data. The DataFrame contains telemetry metrics (disk I/O network I/O CPU usage) but no fields related to GPU power consumption.,1.0,0.0
-DataFlow,What significant input artifacts are involved in the generation of the finetuned model?,workflow,hard,The only significant input artifact used in generating the fine‑tuned model is the column `used.z`.,0.8,0.0
-Telemetry,What is the total energy use for completing the workflow?,workflow,hard,The total energy use for completing the workflow cannot be determined from the provided data.,1.0,0.0
-DataFlow,List all input files with size larger than 100Mb,data,easy,No input files larger than 100 MB were found.,0.9,1.0
-DataFlow,List all different file types used as input,data,easy,The only file type used as input is `z`.,0.2,0.0
-DataFlow,Identify the largest output,data,easy,The largest value of `generated.w` is 1.0 which occurs in the row where `generated.w` equals 1.0.,1.0,1.0
-Control Flow,What is the science domain of the dataset?,data,easy,The science domain of the dataset is not explicitly listed in the provided information.,0.8,0.0
-DataFlow,Does the dataset have a predetermined train-test split?,data,medium,The reduced DataFrame shows tasks from the `finetuning` workflow with recorded `started_at` and `ended_at` timestamps but it does not indicate whether a predefined train‑test split was applied.,0.8,0.0
-DataFlow,How many samples are present in the whole dataset?,data,medium,There are 3 distinct tags in the dataset.,0.0,0.0
-DataFlow,What is the data type of the ground truth (if present)?,data,medium,Not able to answer,0.0,0.0
-Control Flow,What is the specific task for which the dataset was created?,data,medium,The dataset was created to support the **elaboration** activity.,1.0,0.0
-DataFlow,What is the size in byte of one sample?,data,hard,The size in bytes of one sample is the sum of the `telemetry_summary.disk.read_bytes_diff` and `telemetry_summary.disk.write_bytes_diff` columns which equals **550.048 bytes**.,0.2,0.0
-DataFlow,What is the total size of the whole dataset?,data,hard,The total size of the whole dataset is 1 row.,0.0,0.0
-Control Flow,What are the designed uses for this model?,model,easy,The designed uses for this model are not available in the provided data.,0.0,0.0
-Control Flow,How many epochs have been used in the finetuning?,model,easy,The DataFrame shows one activity with `activity_id` = 25 but it does not contain any column that records the number of epochs used in fine‑tuning. Therefore the information required to answer “how many epochs have been used in the finetuning” is not present in the provided data.,0.4,0.0
-DataFlow,How many model parameters (weights) does the model have?,model,easy,The model has 26 parameters (weights).,0.0,0.0
-Control Flow,What is the science domain of the model?,model,easy,The science domain is not directly provided in the sampled data.,0.8,0.0
-Control Flow,What is the task solved by this model (regression or classification or forecast etc.)?,model,medium,The model is used for classification.,1.0,0.5
-Control Flow,What is the intended use of this model?,model,medium,The intended use of this model not directly provided in the sampled data.,0.0,0.0
-DataFlow,What is the size of the final model in Mb?,model,medium,0.0 MB,0.0,0.0
-Scheduling,What technique was used to fine-tune the model? (e.g. LoRa; GAN...),model,medium,The model was fine‑tuned using LoRA.,1.0,0.0
-Telemetry,What is the claimed performance of this model?,model,hard,The claimed performance of the model is not directly provided in the sampled data.,0.2,0.0
-Control Flow,Are the performance shown in the pretrained version improved in the finetuning?,model,hard,The average duration of tasks grouped by `activity_id` is 0.066 seconds.,0.1,0.0
+Category,Question,Type,Difficulty,Answer,Rating_G,Rating_N,Rating_H1
+Control Flow,How many activities are present in the whole workflow?,workflow,easy,There are 11 activities in the workflow.,1.0,0.0,0.4
+Control Flow,What is the final status of the workflow?,workflow,easy,The final status of the workflow is **FINISHED**.,1.0,1.0,1.0
+Control Flow,What is the time to completion of the workflow?,workflow,easy,The time to completion of the workflow is 71.172668 seconds.,1.0,0.0,0.8
+DataFlow,List all the parameters of the first activity of the workflow,workflow,easy,output; disk; duration,0.0,0.0,0.0
+Scheduling,What hardware was used in the workflow?,workflow,easy,The workflow used the hostname `1.0.0.127.in-addr.arpa`.,0.7,0.0,0.0
+Scheduling,Who is responsible for this workflow (person or username or entity)?,workflow,easy,The workflow is executed by the agent `gabrielepadovani`.,1.0,0.0,1.0
+Control Flow,What was the specific execution order of the tasks?,workflow,medium,The tasks were executed in chronological order of their `started_at` timestamps from earliest to latest.,0.3,0.0,0.5
+Control Flow,List all parameters for all activites in the workflow,workflow,medium,The workflow contains the following activities: InputFilesValidation; DomainInference; PipelineCreation; PipelineExecution; PipelineFinalize; OutputGeneration; preprocess; epoch 0; save; elaboration; and analysis.,0.0,0.0,0.2
+Telemetry,What was the peak RAM consumption during the workflow?,workflow,medium,The peak RAM consumption during the workflow was 3.4 GB.,0.9,0.0,0.3
+Scheduling,Has the model been trained in a distributed setting?,workflow,medium,The model was trained in a distributed setting.,1.0,1.0,0.0
+Telemetry,What was the total power consumption in Watts of the GPU(s) during the workflow?,workflow,hard,The total power consumption in watts of the GPU(s) during the workflow cannot be determined from the provided data. The DataFrame contains telemetry metrics (disk I/O network I/O CPU usage) but no fields related to GPU power consumption.,1.0,0.0,1.0
+DataFlow,What significant input artifacts are involved in the generation of the finetuned model?,workflow,hard,The only significant input artifact used in generating the fine‑tuned model is the column `used.z`.,0.8,0.0,0.0
+Telemetry,What is the total energy use for completing the workflow?,workflow,hard,The total energy use for completing the workflow cannot be determined from the provided data.,1.0,0.0,1.0
+DataFlow,List all input files with size larger than 100Mb,data,easy,No input files larger than 100 MB were found.,0.9,1.0,1.0
+DataFlow,List all different file types used as input,data,easy,The only file type used as input is `z`.,0.2,0.0,1.0
+DataFlow,Identify the largest output,data,easy,The largest value of `generated.w` is 1.0 which occurs in the row where `generated.w` equals 1.0.,1.0,1.0,0.0
+Control Flow,What is the science domain of the dataset?,data,easy,The science domain of the dataset is not explicitly listed in the provided information.,0.8,0.0,1.0
+DataFlow,Does the dataset have a predetermined train-test split?,data,medium,The reduced DataFrame shows tasks from the `finetuning` workflow with recorded `started_at` and `ended_at` timestamps but it does not indicate whether a predefined train‑test split was applied.,0.8,0.0,0.0
+DataFlow,How many samples are present in the whole dataset?,data,medium,There are 3 distinct tags in the dataset.,0.0,0.0,0.0
+DataFlow,What is the data type of the ground truth (if present)?,data,medium,No information on grounf truth,0.0,0.0,1.0
+Control Flow,What is the specific task for which the dataset was created?,data,medium,The dataset was created to support the **elaboration** activity.,1.0,0.0,0.0
+DataFlow,What is the size in byte of one sample?,data,hard,The size in bytes of one sample is the sum of the `telemetry_summary.disk.read_bytes_diff` and `telemetry_summary.disk.write_bytes_diff` columns which equals **550.048 bytes**.,0.2,0.0,0.0
+DataFlow,What is the total size of the whole dataset?,data,hard,The total size of the whole dataset is 1 row.,0.0,0.0,0.0
+Control Flow,What are the designed uses for this model?,model,easy,The designed uses for this model are not available in the provided data.,0.0,0.0,1.0
+Control Flow,How many epochs have been used in the finetuning?,model,easy,The DataFrame shows one activity with `activity_id` = 25 but it does not contain any column that records the number of epochs used in fine‑tuning. Therefore the information required to answer “how many epochs have been used in the finetuning” is not present in the provided data.,0.4,0.0,1.0
+DataFlow,How many model parameters (weights) does the model have?,model,easy,The model has 26 parameters (weights).,0.0,0.0,0.0
+Control Flow,What is the science domain of the model?,model,easy,The science domain is not directly provided in the sampled data.,0.8,0.0,1.0
+Control Flow,What is the task solved by this model (regression or classification or forecast etc.)?,model,medium,The model is used for classification.,1.0,0.5,0.0
+Control Flow,What is the intended use of this model?,model,medium,The intended use of this model not directly provided in the sampled data.,0.0,0.0,1.0
+DataFlow,What is the size of the final model in Mb?,model,medium,0.0 MB,0.0,0.0,0.0
+Scheduling,What technique was used to fine-tune the model? (e.g. LoRa; GAN...),model,medium,The model was fine‑tuned using LoRA.,1.0,0.0,0.0
+Telemetry,What is the claimed performance of this model?,model,hard,The claimed performance of the model is not directly provided in the sampled data.,0.2,0.0,1.0
+Control Flow,Are the performance shown in the pretrained version improved in the finetuning?,model,hard,The average duration of tasks grouped by `activity_id` is 0.066 seconds.,0.1,0.0,0.2
